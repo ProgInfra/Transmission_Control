@@ -1,0 +1,17 @@
+image: jdrouet/docker-with-buildx:stable
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+build:
+  stage: build
+  script:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker buildx create --use
+    - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t progower/transmission-control:latest --push .
+  only:
+    - master
