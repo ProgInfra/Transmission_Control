@@ -1,6 +1,6 @@
 # Transmission Control
 
-[![pipeline status](https://gitlab.com/proginfra/transmission_control/badges/main/pipeline.svg)](https://gitlab.com/proginfra/transmission_control/-/commits/main)
+[![pipeline status](https://gitlab.com/proginfra/transmission_control/badges/master/pipeline.svg)](https://gitlab.com/proginfra/transmission_control/-/commits/master)
 
 ![Icon](./icon.png)
 
@@ -119,4 +119,4 @@ See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
 
 This project is licensed under the terms of the MIT license.
 
-See [LICENSE](./LICENCE.md) for more information.
+See [LICENSE](./LICENCE) for more information.
