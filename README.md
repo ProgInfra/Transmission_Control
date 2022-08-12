@@ -29,38 +29,43 @@ Thanks a lot for these project, I just assemble these two project for get VPN su
 
 ## Getting Started
 
-Docker Compose file : **docker-compose.yml**
+- You can use this **docker compose** file bellows to **launch** **Transmission Control**.
+- If you prefer to use a **.env** file, you can refer to the **.env.sample** file in the **Git**.
 
-    version: '3.6'
+Here the Docker Compose file : **docker-compose.yml**
 
-    services:
-      transmission_control:
-        container_name: transmission_control
-        image: progower/transmission-control:latest
-        privileged: true
-        volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - ./credentials:/config:rw
-        - ./config:/data/transmission-home:rw
-        - ./download/completed:/data/completed:rw
-        - ./download/incomplete:/data/incomplete:rw
-        - ./download/watch:/data/watch:rw
-        environment:
-        - CREATE_TUN_DEVICE=true
-        - OPENVPN_PROVIDER=NORDVPN
-        - OPENVPN_USERNAME=root@mail.net
-        - OPENVPN_PASSWORD=root
-        - NORDVPN_COUNTRY=FR
-        - NORDVPN_CATEGORY=legacy_p2p
-        - WEBPROXY_ENABLED=false
-        - LOCAL_NETWORK=192.168.0.0/16
-        ports:
-        - 9091:9091
-        restart: always
+```yaml
+version: '3.6'
+
+services:
+  transmission_control:
+    container_name: transmission_control
+    image: progower/transmission-control:latest
+    privileged: true
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./credentials:/config:rw
+    - ./config:/data/transmission-home:rw
+    - ./download/completed:/data/completed:rw
+    - ./download/incomplete:/data/incomplete:rw
+    - ./download/watch:/data/watch:rw
+    environment:
+    - CREATE_TUN_DEVICE=true
+    - OPENVPN_PROVIDER=NORDVPN
+    - OPENVPN_USERNAME=root@mail.net
+    - OPENVPN_PASSWORD=root
+    - NORDVPN_COUNTRY=FR
+    - NORDVPN_CATEGORY=legacy_p2p
+    - WEBPROXY_ENABLED=false
+    - LOCAL_NETWORK=192.168.0.0/16
+    ports:
+    - 9091:9091
+    restart: always
+```
 
 **Environment Variables Definition** : For envrionment variable setup, please refer to the good [Transmission OpenVPN by Haugene](https://hub.docker.com/r/haugene/transmission-openvpn) documentation.
 
-You can access it : [Transmission Control](http://localhost:9091)
+You can access it with this link after deployment : [Transmission Control](http://localhost:9091)
 
 **Folder Volume Definition** : We have some volume to use our Transmission Control :
 
@@ -73,25 +78,34 @@ You can access it : [Transmission Control](http://localhost:9091)
 
 ## Build
 
-    # Docker Build
-    docker build -t progower/transmission-control:latest .
+```bash
+# Update or download the advanced web ui
+cd src
+./download.sh
+cd ..
 
-    # Docker Compose Build
-    docker-compose build
+# Docker Build
+docker build -t progower/transmission-control:latest .
 
-    # Docker Build Multi Arch
-    docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t progower/transmission-control:latest --push .
+# Docker Compose Build
+docker-compose build
+
+# Docker Build Multi Architecture
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t progower/transmission-control:latest --push .
+```
 
 ## Deploy
 
-    # Start
-    docker-compose up -d
+```bash
+# Start
+docker-compose up -d
 
-    # Start with rebuild
-    docker-compose up -d --build
+# Start with rebuild
+docker-compose up -d --build
 
-    # Stop
-    docker-compose down
+# Stop
+docker-compose down
+```
 
 ## Swarm Deployment
 

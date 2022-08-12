@@ -1,0 +1,30 @@
+version: '3.6'
+
+
+services:
+  transmission_control:
+    container_name: ${TRANSMISSION_NAME}
+    image: ${TRANSMISSION_IMG}:${TRANSMISSION_TAG}
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./credentials:/config:rw
+    - ./config:/data/transmission-home:rw
+    - ./download/completed:/data/completed:rw
+    - ./download/incomplete:/data/incomplete:rw
+    - ./download/watch:/data/watch:rw
+    environment:
+    - CREATE_TUN_DEVICE=true
+    - OPENVPN_PROVIDER=${TRANSMISSION_PROVIDER}
+    - OPENVPN_USERNAME=${TRANSMISSION_USER}
+    - OPENVPN_PASSWORD=${TRANSMISSION_PASSWORD}
+    - NORDVPN_COUNTRY=${TRANSMISSION_COUNTRY}
+    - NORDVPN_CATEGORY=${TRANSMISSION_CATEGORY}
+    - WEBPROXY_ENABLED=false
+    - LOCAL_NETWORK=${TRANSMISSION_NETWORK}
+    ports:
+    - ${TRANSMISSION_PORT}:9091
+    restart: always
